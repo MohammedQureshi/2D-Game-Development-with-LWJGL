@@ -16,7 +16,7 @@ public class MouseHandler {
     public void checkMouseInput(){
         glfwGetCursorPos(displayManager.WINDOW, xMouse, yMouse);
         if(glfwGetMouseButton(displayManager.WINDOW, GLFW_MOUSE_BUTTON_2) == GL_TRUE){
-            System.out.println("x : " + b1.get(0) + ", y = " + b2.get(0));
+            System.out.println("x : " + xMouse.get(0) + ", y = " + yMouse.get(0));
         }
     }
 
