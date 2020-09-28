@@ -34,6 +34,8 @@ public class DisplayManager {
         glfwMakeContextCurrent(WINDOW); //Makes GLFW Context Current
         GL.createCapabilities(); //Creates Context
 
+        GL.createCapabilities();
+
     }
 
 }
