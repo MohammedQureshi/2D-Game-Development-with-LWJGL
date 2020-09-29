@@ -51,11 +51,25 @@ public class MainGame {
                 -0.5f, 0.5f, 0, //Top Left
                 0.5f, 0.5f, 0, //Top Right
                 0.5f, -0.5f, 0, //Bottom Right
+
+                0.5f, -0.5f, 0,
+                -0.5f, -0.5f, 0,
+                -0.5f, 0.5f, 0,
         };
 
-        ModelHandler model = new ModelHandler(vertices);
-        //TextureHandler texture = new TextureHandler("test.png"); //Load Texture
+        float[] texture = new float[]{
+                0,0,
+                1,0,
+                1,1,
 
+                1,1,
+                0,1,
+                0,0
+        };
+
+        ModelHandler model = new ModelHandler(vertices, texture);
+
+        TextureHandler sampleTexture = new TextureHandler("test.png"); //Load Texture
 		while(!glfwWindowShouldClose(WINDOW)){ //While window is not closed
 
 			keyboardHandler.checkKeyboardInput(); //Check keyboard input //Per Class needs to be ran
@@ -64,7 +78,7 @@ public class MainGame {
             glfwPollEvents();
             glClear(GL_COLOR_BUFFER_BIT); //Clears the display
 
-            //texture.bind();
+            sampleTexture.bind();
 
             model.render();
 
