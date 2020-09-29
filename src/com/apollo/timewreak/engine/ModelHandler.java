@@ -24,12 +24,12 @@ public class ModelHandler {
     }
 
     public void render(){
-        glEnable(GL_VERTEX_ARRAY);
+    	glEnableClientState(GL_VERTEX_ARRAY);
         glBindBuffer(GL_ARRAY_BUFFER, vID);
         glVertexPointer(3, GL_FLAT, 0, 0);
         glDrawArrays(GL_TRIANGLES, 0, drawCount);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glDisable(GL_VERTEX_ARRAY);
+        glDisableClientState(GL_VERTEX_ARRAY);
     }
 
 }

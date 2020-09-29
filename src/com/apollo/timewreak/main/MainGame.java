@@ -5,11 +5,12 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
+import org.lwjgl.opengl.GLUtil;
 
 import java.nio.DoubleBuffer;
 
 import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL46.*;
 
 public class MainGame {
 
@@ -28,6 +29,7 @@ public class MainGame {
         }
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // the window will stay hidden after creation
         glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE); // the window will not be resizable
+        glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE); //Debug Mode
 
         WINDOW = glfwCreateWindow(WIDTH, HEIGHT, "Project Apollo", 0,0); //Creates the display
 
@@ -41,11 +43,14 @@ public class MainGame {
         GL.createCapabilities(); //Creates Context
 
         GL.createCapabilities();
+        GLUtil.setupDebugMessageCallback();
 
         glEnable(GL_TEXTURE_2D); //Enable 2D Textures
 
         float[] vertices = new float[]{
-                0
+                -0.5f, 0.5f, 0, //Top Left
+                0.5f, 0.5f, 0, //Top Right
+                0.5f, -0.5f, 0, //Bottom Right
         };
 
         ModelHandler model = new ModelHandler(vertices);
@@ -62,17 +67,6 @@ public class MainGame {
             //texture.bind();
 
             model.render();
-
-//            glBegin(GL_QUADS); //Starting Quad
-//                glTexCoord2f(0,0); //Setting Texture Coord
-//                glVertex2f(-0.5f+keyboardHandler.x,0.5f+keyboardHandler.y); //Sets Quad Vertex
-//                glTexCoord2f(1,0);
-//                glVertex2f(0.5f+keyboardHandler.x,0.5f+keyboardHandler.y);
-//                glTexCoord2f(1,1);
-//                glVertex2f(0.5f+keyboardHandler.x,-0.5f+keyboardHandler.y);
-//                glTexCoord2f(0,1);
-//                glVertex2f(-0.5f+keyboardHandler.x,-0.5f+keyboardHandler.y);
-//            glEnd();
 
             glfwSwapBuffers(WINDOW); //Swaps the buffer to you can draw to it with OpenGL
 
