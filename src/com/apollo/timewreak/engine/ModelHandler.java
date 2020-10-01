@@ -3,6 +3,7 @@ package com.apollo.timewreak.engine;
 import org.lwjgl.BufferUtils;
 
 import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 
 import static org.lwjgl.opengl.GL46.*;
 
@@ -12,8 +13,11 @@ public class ModelHandler {
     private int vertexID;
     private int textureID;
 
-    public ModelHandler(float[] vertices, float[] textureCoords){
-        drawCount = vertices.length / 3;
+    private int indicesID;
+
+    public ModelHandler(float[] vertices, float[] textureCoords, int[] indices){
+        drawCount = indices.length;
+
 
         vertexID = glGenBuffers();
         glBindBuffer(GL_ARRAY_BUFFER, vertexID);
@@ -21,6 +25,14 @@ public class ModelHandler {
         textureID = glGenBuffers();
         glBindBuffer(GL_ARRAY_BUFFER, textureID);
         glBufferData(GL_ARRAY_BUFFER, createBuffer(textureCoords), GL_STATIC_DRAW);
+
+        indicesID = glGenBuffers();
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesID);
+        IntBuffer buffer = BufferUtils.createIntBuffer(indices.length);
+        buffer.put(indices);
+        buffer.flip();
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer, GL_STATIC_DRAW);
+
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
@@ -31,7 +43,9 @@ public class ModelHandler {
         glVertexPointer(3, GL_FLOAT, 0, 0);
         glBindBuffer(GL_ARRAY_BUFFER, textureID);
         glTexCoordPointer(2, GL_FLOAT, 0, 0);
-        glDrawArrays(GL_TRIANGLES, 0, drawCount);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesID);
+        glDrawElements(GL_TRIANGLES, drawCount, GL_UNSIGNED_INT, 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glDisableClientState(GL_VERTEX_ARRAY);
         glDisableClientState(GL_TEXTURE_COORD_ARRAY);
