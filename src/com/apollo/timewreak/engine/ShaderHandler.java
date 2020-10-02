@@ -1,6 +1,11 @@
 package com.apollo.timewreak.engine;
 
+import org.joml.Matrix4f;
+import org.lwjgl.BufferUtils;
+
 import java.io.*;
+import java.nio.FloatBuffer;
+
 import static org.lwjgl.opengl.GL20.*;
 
 
@@ -32,6 +37,7 @@ public class ShaderHandler {
         glAttachShader(application, fragmentShader);
 
         glBindAttribLocation(application, 0, "vertices");
+        glBindAttribLocation(application, 1, "textures");
         glLinkProgram(application);
         if(glGetProgrami(application, GL_LINK_STATUS) != 1){
             System.err.println(glGetProgramInfoLog(application));
@@ -44,6 +50,23 @@ public class ShaderHandler {
         }
 
     }
+
+    public void setUniform(String name, int value){
+        int location = glGetUniformLocation(application, name);
+        if(location != -1){
+            glUniform1i(location, value);
+        }
+    }
+
+    public void setUniform(String name, Matrix4f value){
+        int location = glGetUniformLocation(application, name);
+        FloatBuffer buffer = BufferUtils.createFloatBuffer(16);
+        value.get(buffer);
+        if(location != -1){
+            glUniformMatrix4fv(location, false, buffer);
+        }
+    }
+
     public void bind(){
         glUseProgram(application);
     }

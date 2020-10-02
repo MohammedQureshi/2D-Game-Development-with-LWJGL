@@ -1,6 +1,7 @@
 package com.apollo.timewreak.main;
 
 import com.apollo.timewreak.engine.*;
+import org.joml.Matrix4f;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
@@ -66,7 +67,13 @@ public class MainGame {
 
         ModelHandler model = new ModelHandler(vertices, texture, indices);
         ShaderHandler shaderHandler = new ShaderHandler("VertexShader", "FragmentShader");
-        //TextureHandler sampleTexture = new TextureHandler("test.png"); //Load Texture
+        TextureHandler sampleTexture = new TextureHandler("test.png"); //Load Texture
+        Matrix4f projection = new Matrix4f().ortho2D(-WIDTH/2, WIDTH/2, -HEIGHT/2, HEIGHT/2);
+        Matrix4f scale = new Matrix4f().scale(256);
+        Matrix4f target = new Matrix4f();
+        projection.mul(scale, target);
+
+
 		while(!glfwWindowShouldClose(WINDOW)){ //While window is not closed
 
 			keyboardHandler.checkKeyboardInput(); //Check keyboard input //Per Class needs to be ran
@@ -75,8 +82,11 @@ public class MainGame {
             glfwPollEvents();
             glClear(GL_COLOR_BUFFER_BIT); //Clears the display
 
-            //sampleTexture.bind(); //Bind the texture to the model
             shaderHandler.bind();
+            shaderHandler.setUniform("sampler", 0);
+            shaderHandler.setUniform("projection", target);
+            sampleTexture.bind(0); //Bind the texture to the model
+
             model.render(); //Render the model
 
             glfwSwapBuffers(WINDOW); //Swaps the buffer to you can draw to it with OpenGL
@@ -90,5 +100,4 @@ public class MainGame {
 		mainGameLoop();
 		System.out.println("Game Exited");
 	}
-
 }

@@ -5,6 +5,7 @@ import java.nio.*;
 import static org.lwjgl.opengl.GL12.*;
 import static org.lwjgl.stb.STBImage.*;
 import static org.lwjgl.opengl.GL11.glGenTextures;
+import static org.lwjgl.opengl.GL13.*;
 
 public class TextureHandler {
 
@@ -32,8 +33,11 @@ public class TextureHandler {
         stbi_image_free(textureData);
     }
 
-    public void bind(){
-        glBindTexture(GL_TEXTURE_2D, textureID);
+    public void bind(int sampler){
+        if(sampler >= 0 && sampler <= 31){
+            glActiveTexture(GL_TEXTURE0 + sampler);
+            glBindTexture(GL_TEXTURE_2D, textureID);
+        }
     }
 
     public int getTextureWidth() {
