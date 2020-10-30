@@ -1,6 +1,5 @@
 package com.apollo.timewreak.engine;
 
-import com.apollo.timewreak.main.MainGame;
 import org.lwjgl.BufferUtils;
 
 import java.nio.DoubleBuffer;
@@ -10,13 +9,13 @@ import static org.lwjgl.opengl.GL11.GL_TRUE;
 
 public class MouseHandler {
 
-    private static DisplayHandler display = new DisplayHandler();
+    private static DisplayHandler displayHandler = new DisplayHandler();
 
     private DoubleBuffer xMouse = BufferUtils.createDoubleBuffer(1);
     private DoubleBuffer yMouse = BufferUtils.createDoubleBuffer(1);
     public void checkMouseInput(){
-        glfwGetCursorPos(display.Display, xMouse, yMouse);
-        if(glfwGetMouseButton(display.Display, GLFW_MOUSE_BUTTON_2) == GL_TRUE){
+        glfwGetCursorPos(displayHandler.getDisplay(), xMouse, yMouse);
+        if(glfwGetMouseButton(displayHandler.getDisplay(), GLFW_MOUSE_BUTTON_2) == GL_TRUE){
             System.out.println("x : " + xMouse.get(0) + ", y = " + yMouse.get(0));
         }
     }

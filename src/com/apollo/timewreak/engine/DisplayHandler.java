@@ -6,7 +6,7 @@ import static org.lwjgl.glfw.GLFW.*;
 
 public class DisplayHandler {
 
-    public long Display;
+    private long Display;
     private int WIDTH, HEIGHT;
 
     public DisplayHandler(){
@@ -38,6 +38,7 @@ public class DisplayHandler {
         this.HEIGHT = HEIGHT;
     }
 
+    public long getDisplay(){return Display;};
     public int getWIDTH(){return WIDTH;}
     public int getHEIGHT(){return HEIGHT;}
 }

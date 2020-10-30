@@ -14,8 +14,8 @@ import static org.lwjgl.opengl.GL46.*;
 
 public class MainGame {
 
-//	private static KeyboardHandler keyboardHandler = new KeyboardHandler();
-//	private static MouseHandler mouseHandler = new MouseHandler();
+	private static KeyboardHandler keyboardHandler = new KeyboardHandler();
+	private static MouseHandler mouseHandler = new MouseHandler();
 
 	private static void mainGameLoop(){
         GLFWErrorCallback.createPrint(System.err).set(); // will print the error message in System.err.
