@@ -14,9 +14,6 @@ import static org.lwjgl.opengl.GL46.*;
 
 public class MainGame {
 
-	private static KeyboardHandler keyboardHandler = new KeyboardHandler();
-	private static MouseHandler mouseHandler = new MouseHandler();
-
 	private static void mainGameLoop(){
         GLFWErrorCallback.createPrint(System.err).set(); // will print the error message in System.err.
         if(!glfwInit()){ //Check to see if GLFW has been initialised
@@ -77,7 +74,6 @@ public class MainGame {
         double time = TimerHandler.getTime();
         double unprocessed = 0;
 		while(!display.shouldClose()){ //While window is not closed
-
 		    boolean canRender = false;
 		    double time2 = TimerHandler.getTime();
 		    double passed = time2 - time;
@@ -89,10 +85,11 @@ public class MainGame {
 		        unprocessed -= MAX_FRAME_RATE;
                 canRender = true;
                 target = scale;
-//                keyboardHandler.checkKeyboardInput(); //Check keyboard input //Per Class needs to be ran
-//                mouseHandler.checkMouseInput(); //Check mouse input
+                if(display.getInput().isKeyReleased(GLFW_KEY_ESCAPE)){
+                    glfwSetWindowShouldClose(display.getWindow(), true);
+                }
                 camera.setPosition(new Vector3f(0, 0, 0));
-                glfwPollEvents();
+                display.update();
                 if(FRAME_TIME >= 1.0){
                     FRAME_TIME = 0;
                     System.out.println("FPS: " + FRAMES);

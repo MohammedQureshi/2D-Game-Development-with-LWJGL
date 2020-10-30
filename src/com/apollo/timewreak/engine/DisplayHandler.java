@@ -8,21 +8,28 @@ public class DisplayHandler {
 
     private long Display;
     private int WIDTH, HEIGHT;
+    private boolean FULLSCREEN;
+
+    private InputHandler input;
 
     public DisplayHandler(){
         setSize(1280, 720);
+        setFullscreen(false);
     }
 
-    public void createDisplay(String TITLE){
-        Display = glfwCreateWindow(WIDTH, HEIGHT, TITLE, 0, 0);
-        if(Display == 0) throw new IllegalStateException(("Failed to create Display!"));
+    public void createDisplay(String TITLE) {
 
-        //glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE); //Debug Mode
-        GLFWVidMode videoMode = glfwGetVideoMode(glfwGetPrimaryMonitor()); //Gets monitor settings
-        glfwSetWindowPos(Display, (videoMode.width() - WIDTH) /2, (videoMode.height() - HEIGHT) /2); //Centres display
+        Display = glfwCreateWindow(WIDTH, HEIGHT, TITLE, FULLSCREEN ? glfwGetPrimaryMonitor() : 0, 0);
 
-        glfwShowWindow(Display);
+        if (Display == 0) throw new IllegalStateException(("Failed to create Display!"));
+
+        if(!FULLSCREEN){
+            GLFWVidMode videoMode = glfwGetVideoMode(glfwGetPrimaryMonitor()); //Gets monitor settings
+            glfwSetWindowPos(Display, (videoMode.width() - WIDTH) / 2, (videoMode.height() - HEIGHT) / 2); //Centres display
+            glfwShowWindow(Display);
+        }
         glfwMakeContextCurrent(Display);
+        input = new InputHandler(Display);
     }
 
     public boolean shouldClose(){
@@ -38,7 +45,15 @@ public class DisplayHandler {
         this.HEIGHT = HEIGHT;
     }
 
-    public long getDisplay(){return Display;};
+    public void update(){
+        input.update();
+        glfwPollEvents();
+    }
+
+    public void setFullscreen(boolean fullscreen){this.FULLSCREEN = fullscreen; }
+    public boolean isFullscreen(){ return FULLSCREEN; }
+    public long getWindow(){return Display;};
+    public InputHandler getInput(){return input;}
     public int getWIDTH(){return WIDTH;}
     public int getHEIGHT(){return HEIGHT;}
 }
