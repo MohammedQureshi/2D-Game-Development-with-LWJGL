@@ -1,4 +1,4 @@
-package com.apollo.timewreak.engine;
+package com.apollo.timewreak.inputOutput;
 
 import static org.lwjgl.glfw.GLFW.*;
 

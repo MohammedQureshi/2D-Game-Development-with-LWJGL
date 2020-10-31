@@ -1,5 +1,6 @@
-package com.apollo.timewreak.engine;
+package com.apollo.timewreak.inputOutput;
 
+import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -11,6 +12,15 @@ public class DisplayHandler {
     private boolean FULLSCREEN;
 
     private InputHandler input;
+
+    public static void setCallbacks(){
+        glfwSetErrorCallback(new GLFWErrorCallback() {
+            @Override
+            public void invoke(int error, long description) {
+                throw new IllegalStateException(GLFWErrorCallback.getDescription(description));
+            }
+        });
+    }
 
     public DisplayHandler(){
         setSize(1280, 720);
