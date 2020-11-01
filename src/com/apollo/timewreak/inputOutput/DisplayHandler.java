@@ -1,5 +1,6 @@
 package com.apollo.timewreak.inputOutput;
 
+import com.apollo.timewreak.main.Config;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 
@@ -8,7 +9,6 @@ import static org.lwjgl.glfw.GLFW.*;
 public class DisplayHandler {
 
     private long Display;
-    private int WIDTH, HEIGHT;
     private boolean FULLSCREEN;
 
     private InputHandler input;
@@ -23,19 +23,18 @@ public class DisplayHandler {
     }
 
     public DisplayHandler(){
-        setSize(1280, 720);
-        setFullscreen(false);
+        setFullscreen(Config.DISPLAY_FULLSCREEN);
     }
 
     public void createDisplay(String TITLE) {
 
-        Display = glfwCreateWindow(WIDTH, HEIGHT, TITLE, FULLSCREEN ? glfwGetPrimaryMonitor() : 0, 0);
+        Display = glfwCreateWindow(Config.GAME_WIDTH, Config.GAME_HEIGHT, TITLE, FULLSCREEN ? glfwGetPrimaryMonitor() : 0, 0);
 
         if (Display == 0) throw new IllegalStateException(("Failed to create Display!"));
 
         if(!FULLSCREEN){
-            GLFWVidMode videoMode = glfwGetVideoMode(glfwGetPrimaryMonitor()); //Gets monitor settings
-            glfwSetWindowPos(Display, (videoMode.width() - WIDTH) / 2, (videoMode.height() - HEIGHT) / 2); //Centres display
+            GLFWVidMode videoMode = glfwGetVideoMode(Config.PRIMARY_DISPLAY); //Gets monitor settings
+            glfwSetWindowPos(Display, (videoMode.width() - Config.GAME_WIDTH) / 2, (videoMode.height() - Config.GAME_HEIGHT) / 2); //Centres display
             glfwShowWindow(Display);
         }
         glfwMakeContextCurrent(Display);
@@ -50,11 +49,6 @@ public class DisplayHandler {
         glfwSwapBuffers(Display); //Swaps the buffer to you can draw to it with OpenGL
     }
 
-    public void setSize(int WIDTH, int HEIGHT){
-        this.WIDTH = WIDTH;
-        this.HEIGHT = HEIGHT;
-    }
-
     public void update(){
         input.update();
         glfwPollEvents();
@@ -64,6 +58,6 @@ public class DisplayHandler {
     public boolean isFullscreen(){ return FULLSCREEN; }
     public long getWindow(){return Display;};
     public InputHandler getInput(){return input;}
-    public int getWIDTH(){return WIDTH;}
-    public int getHEIGHT(){return HEIGHT;}
+    public int getWIDTH(){return Config.GAME_WIDTH;}
+    public int getHEIGHT(){return Config.GAME_HEIGHT;}
 }

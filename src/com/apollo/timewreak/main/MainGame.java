@@ -3,6 +3,7 @@ package com.apollo.timewreak.main;
 import com.apollo.timewreak.engine.*;
 import com.apollo.timewreak.inputOutput.DisplayHandler;
 import com.apollo.timewreak.inputOutput.TimerHandler;
+import com.apollo.timewreak.world.TileHandler;
 import com.apollo.timewreak.world.TileRenderer;
 import com.apollo.timewreak.world.World;
 import org.joml.Matrix4f;
@@ -27,7 +28,7 @@ public class MainGame {
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // the window will stay hidden after creation
         glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE); // the window will not be resizable
         DisplayHandler display = new DisplayHandler();
-        display.createDisplay("Project Apollo");
+        display.createDisplay(Config.GAME_NAME);
 
         GL.createCapabilities(); //Creates Context
 
@@ -41,13 +42,13 @@ public class MainGame {
         TileRenderer tiles = new TileRenderer();
 
         ShaderHandler shaderHandler = new ShaderHandler("VertexShader", "FragmentShader");
-        TextureHandler sampleTexture = new TextureHandler("test.png"); //Load Texture
+        //TextureHandler sampleTexture = new TextureHandler("test.png"); //Load Texture
 
         World world = new World();
 
-        camera.setPosition(new Vector3f(100, 0, 0));
+        world.setTile(TileHandler.newTile, 2, 0);
 
-        double MAX_FRAME_RATE = 1.0/144.0;
+        double MAX_FRAME_RATE = 1.0/Config.MAX_FPS;
         double FRAME_TIME = 0;
         double FRAMES = 0;
         double time = TimerHandler.getTime();
@@ -67,17 +68,20 @@ public class MainGame {
                     glfwSetWindowShouldClose(display.getWindow(), true);
                 }
                 if(display.getInput().isKeyDown(GLFW_KEY_W)){
-                    camera.getPosition().sub(new Vector3f(0, 1, 0));
+                    camera.getPosition().sub(new Vector3f(0, Config.CAMERA_SPEED, 0));
                 }
                 if(display.getInput().isKeyDown(GLFW_KEY_A)){
-                    camera.getPosition().sub(new Vector3f(-1, 0, 0));
+                    camera.getPosition().sub(new Vector3f(-Config.CAMERA_SPEED, 0, 0));
                 }
                 if(display.getInput().isKeyDown(GLFW_KEY_S)){
-                    camera.getPosition().sub(new Vector3f(0, -1, 0));
+                    camera.getPosition().sub(new Vector3f(0, -Config.CAMERA_SPEED, 0));
                 }
                 if(display.getInput().isKeyDown(GLFW_KEY_D)){
-                    camera.getPosition().sub(new Vector3f(1, 0, 0));
+                    camera.getPosition().sub(new Vector3f(Config.CAMERA_SPEED, 0, 0));
                 }
+
+                world.correctCamera(camera, display);
+
                 display.update();
                 if(FRAME_TIME >= 1.0){
                     FRAME_TIME = 0;
