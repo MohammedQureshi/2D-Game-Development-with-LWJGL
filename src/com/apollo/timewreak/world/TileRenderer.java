@@ -18,7 +18,7 @@ public class TileRenderer {
         float[] vertices = new float[]{
                 -1f, 1f, 0, //Top Left 0
                 1f, 1f, 0, //Top Right 1
-                1f, -0.5f, 0, //Bottom Right 2
+                1f, -1f, 0, //Bottom Right 2
                 -1f, -1f, 0, //Bottle Left 3
         };
 
@@ -47,16 +47,16 @@ public class TileRenderer {
 
     public void renderTile(byte ID, int x, int y, ShaderHandler shader, Matrix4f world, CameraHandler camera){
         shader.bind();
-        if(tileTextures.containsKey(TileHandler.tiles[ID].getTexture())){
+        if(tileTextures.containsKey(TileHandler.tiles[ID].getTexture()))
             tileTextures.get(TileHandler.tiles[ID].getTexture()).bind(0);
-            Matrix4f tilePosition = new Matrix4f().translate(new Vector3f(x, y, 0));
-            Matrix4f target = new Matrix4f();
 
-            camera.getProjection().mul(world, target);
-            target.mul(tilePosition);
-            shader.setUniform("sampler", 0);
-            shader.setUniform("projection" , target);
-            model.render();
-        }
+        Matrix4f tilePosition = new Matrix4f().translate(new Vector3f(x*2, y*2, 0));
+        Matrix4f target = new Matrix4f();
+
+        camera.getProjection().mul(world, target);
+        target.mul(tilePosition);
+        shader.setUniform("sampler", 0);
+        shader.setUniform("projection" , target);
+        model.render();
     }
 }
