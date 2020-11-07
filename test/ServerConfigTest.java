@@ -1,5 +1,3 @@
-package server;
-
 import com.apollo.timewreak.networking.ServerConfig;
 import org.junit.Test;
 
