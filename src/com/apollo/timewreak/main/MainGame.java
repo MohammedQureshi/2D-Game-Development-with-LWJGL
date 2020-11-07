@@ -32,7 +32,6 @@ public class MainGame {
 
         GL.createCapabilities(); //Creates Context
 
-        GL.createCapabilities();
         //GLUtil.setupDebugMessageCallback(); //Debug Checker
         CameraHandler camera = new CameraHandler(display.getWIDTH(), display.getHEIGHT());
         glEnable(GL_TEXTURE_2D); //Enable 2D Textures
@@ -42,17 +41,18 @@ public class MainGame {
         TileRenderer tiles = new TileRenderer();
 
         ShaderHandler shaderHandler = new ShaderHandler("VertexShader", "FragmentShader");
-        //TextureHandler sampleTexture = new TextureHandler("test.png"); //Load Texture
+        //TextureHandler sampleTexture = new TextureHandler("RoomBackground.png"); //Load Texture
 
         World world = new World();
 
-        world.setTile(TileHandler.newTile, 2, 0);
+        world.setTile(TileHandler.newTile, 1, 0);
 
         double MAX_FRAME_RATE = 1.0/Config.MAX_FPS;
         double FRAME_TIME = 0;
         double FRAMES = 0;
         double time = TimerHandler.getTime();
         double unprocessed = 0;
+
 		while(!display.shouldClose()){ //While window is not closed
 		    boolean canRender = false;
 		    double time2 = TimerHandler.getTime();
@@ -79,22 +79,19 @@ public class MainGame {
                 if(display.getInput().isKeyDown(GLFW_KEY_D)){
                     camera.getPosition().sub(new Vector3f(Config.CAMERA_SPEED, 0, 0));
                 }
-
                 world.correctCamera(camera, display);
-
                 display.update();
+
                 if(FRAME_TIME >= 1.0){
                     FRAME_TIME = 0;
                     System.out.println("FPS: " + FRAMES);
                     FRAMES = 0;
                 }
             }
-
 		    if(canRender){
                 glClear(GL_COLOR_BUFFER_BIT); //Clears the display
 
-                world.render(tiles, shaderHandler, camera);
-
+                world.render(tiles, shaderHandler, camera, display);
                 display.swapBuffers();
                 FRAMES++;
             }

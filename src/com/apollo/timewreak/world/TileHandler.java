@@ -2,9 +2,9 @@ package com.apollo.timewreak.world;
 
 public class TileHandler {
 
-    public static TileHandler tiles[] = new TileHandler[16];
+    public static TileHandler tiles[] = new TileHandler[4];
 
-    public static final TileHandler sampleTile = new TileHandler((byte)0, "test");
+    public static final TileHandler sampleTile = new TileHandler((byte)0, "RoomBackground");
     public static final TileHandler newTile = new TileHandler((byte) 1, "test2");
 
     private byte ID;
