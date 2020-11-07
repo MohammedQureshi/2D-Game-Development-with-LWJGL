@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -55,6 +56,8 @@ public class Server {
         logger.info("Running server with current configuration : " +  serverConfig.toString());
     }
 
+    public ServerConfig getProperties() { return this.configuration; }
+
     /** starts the server. */
     public void start() {
         try {
@@ -62,19 +65,25 @@ public class Server {
                 // listening for a connection
                 Socket clientSocket = serverSocket.accept();
 
-                PrintWriter outputStream = new PrintWriter(clientSocket.getOutputStream(), true);
+                PrintWriter printWriter = new PrintWriter(clientSocket.getOutputStream(), true);
 
-                outputStream.println("Hello!");
+                String prompt = "Hello, enter a message!";
+
+                printWriter.println(prompt);
+
+                logger.info(String.format("[TO Client] %s", prompt));
 
                 BufferedReader clientInputStream = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                String message = clientInputStream.readLine();
+                String output = clientInputStream.readLine();
 
-                if(message == "exit") {
-                    outputStream.close();
+                printWriter.println(output);
+
+                if(output.equalsIgnoreCase("exit")) {
+                    printWriter.close();
                     clientSocket.close();
                 }
 
-                logger.info(String.format("[FROM Client] %s", clientInputStream.readLine()));
+                logger.info(String.format("[FROM Client] %s", output));
 
             }
         } catch (IOException e) {
