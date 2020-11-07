@@ -1,7 +1,5 @@
 package com.apollo.timewreak.networking;
 
-import com.sun.javafx.util.Logging;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
