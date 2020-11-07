@@ -13,5 +13,8 @@ public class Config {
     public static double MAX_FPS = 65;
     public static int CAMERA_SPEED = 5;
     public static final int GAME_SCALE = 32;
+    public class Server {
+        public static final int HOST_PORT = 5432;
+    }
 
 }
