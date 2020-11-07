@@ -1,5 +1,4 @@
-package server;
-
+import com.apollo.timewreak.networking.Client;
 import com.apollo.timewreak.networking.Server;
 import com.apollo.timewreak.networking.ServerConfig;
 import org.junit.Before;
@@ -7,15 +6,14 @@ import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 
 public class ServerTest {
-    @Before
-    public void initalize() {
+    static ServerConfig sc;
 
-    }
-    public static void main(String[] args){
-        ServerConfig sc = new ServerConfig();
+    // TODO: correctly implement the client and Server, currently using main to test the connections.
+    public static void main(String args[]) {
+        sc = new ServerConfig();
         sc.setProperty("port", "5542");
+
         Server s = new Server(sc);
         s.start();
-        s.stop();
     }
 }
