@@ -1,6 +1,7 @@
 package com.apollo.timewreak.inputOutput;
 
 import com.apollo.timewreak.main.Config;
+import com.apollo.timewreak.settings.VideoSettings;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 
@@ -10,7 +11,7 @@ public class DisplayHandler {
 
     private long Display;
     private boolean FULLSCREEN;
-
+    private VideoSettings videoSettings;
     private InputHandler input;
 
     public static void setCallbacks(){
@@ -23,7 +24,9 @@ public class DisplayHandler {
     }
 
     public DisplayHandler(){
-        setFullscreen(Config.DISPLAY_FULLSCREEN);
+        videoSettings = new VideoSettings();
+        videoSettings.setPropertyIfFound("FULLSCREEN", true);
+        setFullscreen(Boolean.valueOf(videoSettings.getProperty("FULLSCREEN")));
     }
 
     public void createDisplay(String TITLE) {
@@ -33,7 +36,7 @@ public class DisplayHandler {
         if (Display == 0) throw new IllegalStateException(("Failed to create Display!"));
 
         if(!FULLSCREEN){
-            GLFWVidMode videoMode = glfwGetVideoMode(Config.PRIMARY_DISPLAY); //Gets monitor settings
+            GLFWVidMode videoMode = glfwGetVideoMode(Screen.getPrimaryDisplay()); //Gets monitor settings
             glfwSetWindowPos(Display, (videoMode.width() - Config.GAME_WIDTH) / 2, (videoMode.height() - Config.GAME_HEIGHT) / 2); //Centres display
             glfwShowWindow(Display);
         }
