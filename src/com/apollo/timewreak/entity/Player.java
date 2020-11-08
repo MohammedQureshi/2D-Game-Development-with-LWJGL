@@ -43,7 +43,7 @@ public class Player {
         this.texture = new TextureHandler("front_left.png");
 
         transform = new Transform();
-        float Scale = 16;
+        float Scale = 64;
         transform.scale = new Vector3f(Scale,Scale,1);
     }
 
@@ -61,7 +61,7 @@ public class Player {
             transform.position.add(new Vector3f(Config.CAMERA_SPEED*delta, 0, 0));
         }
 
-        camera.setPosition(transform.position.mul(-world.getScale(), new Vector3f()));
+        camera.setPosition(transform.position.mul(-world.getScale() -50, new Vector3f()));
     }
 
     public void render(ShaderHandler shader, CameraHandler camera){
