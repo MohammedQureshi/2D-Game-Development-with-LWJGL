@@ -25,7 +25,7 @@ public class DisplayHandler {
 
     public DisplayHandler(){
         videoSettings = new VideoSettings();
-        videoSettings.setPropertyIfFound("FULLSCREEN", true);
+        videoSettings.setPropertyIfFound("FULLSCREEN", false);
         setFullscreen(Boolean.valueOf(videoSettings.getProperty("FULLSCREEN")));
     }
 

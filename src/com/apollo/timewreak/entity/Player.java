@@ -43,7 +43,7 @@ public class Player {
         this.texture = new TextureHandler("front_left.png");
 
         transform = new Transform();
-        float Scale = 64;
+        float Scale = 16;
         transform.scale = new Vector3f(Scale,Scale,1);
     }
 
