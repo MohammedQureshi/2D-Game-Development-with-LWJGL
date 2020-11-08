@@ -7,8 +7,9 @@ public class ServerConfig {
     private Properties properties;
 
     private void setDefaultsPropertiesAndValues() {
-        this.properties.setProperty("port", "5432");
-        this.properties.setProperty("ip", "127.0.0.1");
+        this.setProperty("port", Server.DefaultConfig.HOST_PORT);
+        this.setProperty("ip", "127.0.0.1");
+        this.setProperty("maxPlayers", Server.DefaultConfig.MAX_PLAYER_COUNT);
     }
 
     public ServerConfig() {
@@ -23,6 +24,11 @@ public class ServerConfig {
     public Object setProperty(String name, String value) {
         return this.properties.setProperty(name, value);
     }
+
+    public Object setProperty(String name, int value) {
+        return this.setProperty(name, Integer.toString(value));
+    }
+
 
     public String getProperty(String propertyName) {
         return this.properties.getProperty(propertyName);
