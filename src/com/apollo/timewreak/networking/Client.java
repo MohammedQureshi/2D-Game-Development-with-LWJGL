@@ -41,10 +41,20 @@ public class Client {
         connect("127.0.0.1", 5432);
     }
 
+    /**
+     * Create a client connection to the game server
+     * @see #connect(String, int, int)
+     */
     public void connect(String ip, int port) {
         connect(ip, port, DEFAULT_TIMEOUT);
     }
 
+    /**
+     *  create a client connection to the game server
+     * @param ip the ip address of the server you want to connect to
+     * @param port the port of the server you want to connect to
+     * @param timeout how long the request has until timeout
+     */
     public void connect(String ip, int port, int timeout) {
         try {
             logger.info(String.format("Connecting to: %s:%d MS Timeout: %d", ip, port, timeout));
