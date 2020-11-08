@@ -66,6 +66,10 @@ public abstract class Setting {
         this.setPropertyIfFound(property, String.valueOf(value));
     }
 
+    public String getProperty(String property) {
+        // TODO: return default value of ""
+        return this.settings.getProperty(property);
+    }
     public Set<Object> getAllProperties() {
         return this.settings.keySet();
     }
