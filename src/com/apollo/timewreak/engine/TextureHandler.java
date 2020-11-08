@@ -33,6 +33,11 @@ public class TextureHandler {
         stbi_image_free(textureData);
     }
 
+    protected void finalise() throws Throwable {
+        glDeleteTextures(textureID);
+        super.finalize();
+    }
+
     public void bind(int sampler){
         if(sampler >= 0 && sampler <= 31){
             glActiveTexture(GL_TEXTURE0 + sampler);

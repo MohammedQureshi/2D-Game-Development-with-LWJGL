@@ -1,6 +1,7 @@
 package com.apollo.timewreak.main;
 
 import com.apollo.timewreak.engine.*;
+import com.apollo.timewreak.entity.Player;
 import com.apollo.timewreak.inputOutput.DisplayHandler;
 import com.apollo.timewreak.inputOutput.TimerHandler;
 import com.apollo.timewreak.world.TileHandler;
@@ -45,7 +46,9 @@ public class MainGame {
 
         World world = new World();
 
-        world.setTile(TileHandler.newTile, 1, 0);
+        Player player = new Player();
+
+        //world.setTile(TileHandler.newTile, 1, 0);
 
         double MAX_FRAME_RATE = 1.0/Config.MAX_FPS;
         double FRAME_TIME = 0;
@@ -67,18 +70,9 @@ public class MainGame {
                 if(display.getInput().isKeyReleased(GLFW_KEY_ESCAPE)){
                     glfwSetWindowShouldClose(display.getWindow(), true);
                 }
-                if(display.getInput().isKeyDown(GLFW_KEY_W)){
-                    camera.getPosition().sub(new Vector3f(0, Config.CAMERA_SPEED, 0));
-                }
-                if(display.getInput().isKeyDown(GLFW_KEY_A)){
-                    camera.getPosition().sub(new Vector3f(-Config.CAMERA_SPEED, 0, 0));
-                }
-                if(display.getInput().isKeyDown(GLFW_KEY_S)){
-                    camera.getPosition().sub(new Vector3f(0, -Config.CAMERA_SPEED, 0));
-                }
-                if(display.getInput().isKeyDown(GLFW_KEY_D)){
-                    camera.getPosition().sub(new Vector3f(Config.CAMERA_SPEED, 0, 0));
-                }
+
+                player.update((float)MAX_FRAME_RATE, display, camera, world);
+
                 world.correctCamera(camera, display);
                 display.update();
 
@@ -92,6 +86,7 @@ public class MainGame {
                 glClear(GL_COLOR_BUFFER_BIT); //Clears the display
 
                 world.render(tiles, shaderHandler, camera, display);
+                player.render(shaderHandler, camera);
                 display.swapBuffers();
                 FRAMES++;
             }

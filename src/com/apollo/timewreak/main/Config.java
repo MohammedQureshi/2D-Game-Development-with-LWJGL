@@ -16,6 +16,6 @@ public class Config {
     public class Server {
         public static final int HOST_PORT = 5432;
     }
-    public static final int GAME_SCALE = 1000;
+    public static final int GAME_SCALE = 16;
 
 }

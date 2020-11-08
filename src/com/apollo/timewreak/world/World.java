@@ -10,7 +10,7 @@ import org.joml.Vector3f;
 import javax.swing.*;
 
 public class World {
-    private final int view = 6;
+    private final int view = 40;
     private byte[] tiles;
     private int WIDTH;
     private int HEIGHT;
@@ -18,19 +18,14 @@ public class World {
     private Matrix4f world;
 
     public World(){
-        WIDTH = 2;
-        HEIGHT = 2;
+        WIDTH = 256;
+        HEIGHT = 256;
         tiles = new byte[WIDTH * HEIGHT];
         world = new Matrix4f().setTranslation(new Vector3f(0));
         world.scale(Config.GAME_SCALE);
     }
 
     public void render(TileRenderer render, ShaderHandler shader, CameraHandler camera, DisplayHandler display){
-//        for(int i = 0; i < HEIGHT; i++){
-//            for(int j = 0; j < WIDTH; j++){
-//                render.renderTile(tiles[j + i * WIDTH], j, -i, shader, world,camera);
-//            }
-//        }
         int posX = ((int) camera.getPosition().x + (display.getWIDTH()/2)) / (Config.GAME_SCALE * 2);
         int posY = ((int) camera.getPosition().y - (display.getHEIGHT()/2)) / (Config.GAME_SCALE * 2);
 
@@ -67,5 +62,9 @@ public class World {
         }catch(ArrayIndexOutOfBoundsException e){
             return null;
         }
+    }
+
+    public float getScale() {
+        return Config.GAME_SCALE;
     }
 }

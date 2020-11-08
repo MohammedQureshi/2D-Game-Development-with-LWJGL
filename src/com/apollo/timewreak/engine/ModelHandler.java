@@ -37,6 +37,12 @@ public class ModelHandler {
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
+    protected void finalise(){
+        glDeleteBuffers(vertexID);
+        glDeleteBuffers(textureID);
+        glDeleteBuffers(indicesID);
+    }
+
     public void render(){
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
