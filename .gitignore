@@ -1,4 +1,5 @@
 # ignoring automatically generated directory from intellj
 .idea
 *.class
-out/*
+out
+*.cfg
