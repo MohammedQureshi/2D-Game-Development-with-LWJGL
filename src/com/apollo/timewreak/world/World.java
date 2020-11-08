@@ -18,8 +18,8 @@ public class World {
     private Matrix4f world;
 
     public World(){
-        WIDTH = 256;
-        HEIGHT = 256;
+        WIDTH = 64;
+        HEIGHT = 64;
         tiles = new byte[WIDTH * HEIGHT];
         world = new Matrix4f().setTranslation(new Vector3f(0));
         world.scale(Config.GAME_SCALE);
@@ -29,9 +29,9 @@ public class World {
         int posX = ((int) camera.getPosition().x + (display.getWIDTH()/2)) / (Config.GAME_SCALE * 2);
         int posY = ((int) camera.getPosition().y - (display.getHEIGHT()/2)) / (Config.GAME_SCALE * 2);
 
-        for(int i = 0; i < view; i++){
-            for(int j = 0; j < view; j++){
-                TileHandler tile = getTile(i-posX, j-posY);
+        for(int i = 0; i < view + 3; i++){
+            for(int j = 0; j < view + 2; j++){
+                TileHandler tile = getTile(i-posX, j+posY);
                 if(tile != null){
                     render.renderTile(tile, i-posX, -j-posY, shader, world, camera);
                 }
