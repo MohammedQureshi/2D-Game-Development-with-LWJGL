@@ -11,6 +11,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Server {
+    public static class DefaultConfig {
+        public static final int HOST_PORT = 5432;
+        public static final int MAX_PLAYER_COUNT = 6;
+    }
+
     private ServerSocket serverSocket = null;
     private boolean serverIsRunning = false;
     private ServerConfig configuration;
