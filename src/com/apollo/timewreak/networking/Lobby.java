@@ -12,7 +12,7 @@ public class Lobby {
 
     public Lobby() {
         /** getting the value from the Config and getting the host port. */
-        server = new Server(Config.Server.HOST_PORT);
+        server = new Server(Server.DefaultConfig.HOST_PORT);
 
         server.start();
     }
