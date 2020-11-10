@@ -47,6 +47,13 @@ public class Player{
     }
     private boolean walkingUp = false;
     private boolean walkingRight = false;
+    
+    
+    private boolean alreadyRunningOne = false;
+    private boolean alreadyRunningTwo = false;
+    private boolean alreadyRunningThree = false;
+    private boolean alreadyRunningFour = false;
+    
     public void update(float delta, DisplayHandler display, CameraHandler camera, World world){
         if(display.getInput().isKeyDown(GLFW_KEY_W)){
             transform.position.add(new Vector3f(0, Config.CAMERA_SPEED*delta, 0));
@@ -64,17 +71,34 @@ public class Player{
             transform.position.add(new Vector3f(Config.CAMERA_SPEED*delta, 0, 0));
             walkingRight = true;
         }
-
-        if(walkingUp == true && walkingRight == false){
+        
+        
+        if(walkingUp && !walkingRight && !alreadyRunningOne){
             this.texture = new AnimationHandler(1, 3, "backLeft");
-        } else if(walkingUp == true && walkingRight == true){
+            alreadyRunningOne = true;
+            alreadyRunningTwo = false;
+            alreadyRunningThree = false;
+            alreadyRunningFour = false;
+        } else if(walkingUp && walkingRight && !alreadyRunningTwo){
             this.texture = new AnimationHandler(1, 3, "backRight");
+            alreadyRunningTwo = true;
+            alreadyRunningOne = false;
+            alreadyRunningThree = false;
+            alreadyRunningFour = false;
         }
 
-        if(walkingUp == false && walkingRight == false){
+        if(!walkingUp && !walkingRight & !alreadyRunningThree){
             this.texture = new AnimationHandler(3, 3, "frontLeft");
-        } else if(walkingUp == false && walkingRight == true){
+            alreadyRunningThree = true;
+            alreadyRunningOne = false;
+            alreadyRunningTwo = false;
+            alreadyRunningFour = false;
+        } else if(!walkingUp && walkingRight && !alreadyRunningFour){
             this.texture = new AnimationHandler(3, 3, "frontRight");
+            alreadyRunningFour = true;
+            alreadyRunningOne = false;
+            alreadyRunningTwo = false;
+            alreadyRunningThree = false;
         }
         
         object = new GameObject(transform.getPosition().x,transform.getPosition().y);
