@@ -10,7 +10,7 @@ public class Config {
     public static int GAME_WIDTH = 1280;
     public static int GAME_HEIGHT = 720;
     public static double MAX_FPS = 65;
-    public static int CAMERA_SPEED = 5;
+    public static int PLAYER_SPEED = 7;
     public static final int GAME_SCALE = 16;
 
 }

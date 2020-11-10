@@ -6,9 +6,6 @@ import com.apollo.timewreak.main.Config;
 import com.apollo.timewreak.main.GameObject;
 import com.apollo.timewreak.world.World;
 import org.joml.Vector3f;
-import org.w3c.dom.Text;
-
-import java.util.Vector;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_D;
@@ -56,19 +53,19 @@ public class Player{
     
     public void update(float delta, DisplayHandler display, CameraHandler camera, World world){
         if(display.getInput().isKeyDown(GLFW_KEY_W)){
-            transform.position.add(new Vector3f(0, Config.CAMERA_SPEED*delta, 0));
+            transform.position.add(new Vector3f(0, Config.PLAYER_SPEED *delta, 0));
             walkingUp = true;
         }
         if(display.getInput().isKeyDown(GLFW_KEY_A)){
-            transform.position.add(new Vector3f(-Config.CAMERA_SPEED*delta, 0, 0));
+            transform.position.add(new Vector3f(-Config.PLAYER_SPEED *delta, 0, 0));
             walkingRight = false;
         }
         if(display.getInput().isKeyDown(GLFW_KEY_S)){
-            transform.position.add(new Vector3f(0, -Config.CAMERA_SPEED*delta, 0));
+            transform.position.add(new Vector3f(0, -Config.PLAYER_SPEED *delta, 0));
             walkingUp = false;
         }
         if(display.getInput().isKeyDown(GLFW_KEY_D)){
-            transform.position.add(new Vector3f(Config.CAMERA_SPEED*delta, 0, 0));
+            transform.position.add(new Vector3f(Config.PLAYER_SPEED *delta, 0, 0));
             walkingRight = true;
         }
         
