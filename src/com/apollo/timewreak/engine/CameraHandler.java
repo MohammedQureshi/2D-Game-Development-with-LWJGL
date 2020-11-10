@@ -7,26 +7,27 @@ public class CameraHandler {
 
     private Vector3f position;
     private Matrix4f projection;
-
+    
+    //Camera object to load camera into main
     public CameraHandler(int width, int height){
-        position = new Vector3f(0,0,0);
-        projection = new Matrix4f().setOrtho2D(-width/2, width/2, -height/2, height/2);
+        position = new Vector3f(0,0,0); //Sets starting position off camera
+        projection = new Matrix4f().setOrtho2D(-width/2, width/2, -height/2, height/2); //Sets projection matrix
     }
-
+    
     public void setPosition(Vector3f position){
-        this.position = position;
+        this.position = position; //Set position in another class
     }
 
     public void addPosition(Vector3f position){
-        this.position.add(position);
+        this.position.add(position); //Add value to current position
     }
 
     public Vector3f getPosition(){
-        return position;
+        return position; //Get position camera is currently at
     }
 
     public Matrix4f getProjection(){
-        return projection.translate(position, new Matrix4f());
+        return projection.translate(position, new Matrix4f()); //Get projection matrix
     }
 
 }

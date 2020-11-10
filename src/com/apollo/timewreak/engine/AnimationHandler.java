@@ -19,14 +19,17 @@ public class AnimationHandler {
         this.lastTime = TimerHandler.getTime();
         this.fps = 1.0/(double)fps;
 
+        //Loads all the different files that use the animation.
         this.frames = new TextureHandler[amount];
         for(int i = 0; i < amount; i++) {
             this.frames[i] = new TextureHandler("Animation/" + filename + "_" + i + ".png");
         }
     }
-
+    
+    //Bind the texture
     public void bind() { bind(0); }
 
+    //Run though the multiple textures and binds it each time a new texture comes onto screen
     public void bind(int sampler) {
         this.currentTime = TimerHandler.getTime();
         this.elapsedTime += currentTime - lastTime;

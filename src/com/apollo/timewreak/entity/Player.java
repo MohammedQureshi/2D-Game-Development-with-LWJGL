@@ -3,6 +3,7 @@ package com.apollo.timewreak.entity;
 import com.apollo.timewreak.engine.*;
 import com.apollo.timewreak.inputOutput.DisplayHandler;
 import com.apollo.timewreak.main.Config;
+import com.apollo.timewreak.main.GameObject;
 import com.apollo.timewreak.world.World;
 import org.joml.Vector3f;
 import org.w3c.dom.Text;
@@ -12,10 +13,11 @@ import java.util.Vector;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_D;
 
-public class Player {
+public class Player{
     private ModelHandler model;
     private AnimationHandler texture;
     private Transform transform;
+    private GameObject object;
     public Player(){
         float[] vertices = new float[]{
                 -1f, 1f, 0, //Top Left 0
@@ -74,6 +76,8 @@ public class Player {
         } else if(walkingUp == false && walkingRight == true){
             this.texture = new AnimationHandler(3, 3, "frontRight");
         }
+        
+        object = new GameObject(transform.getPosition().x,transform.getPosition().y);
 
         camera.setPosition(transform.position.mul(-world.getScale() -50, new Vector3f()));
     }

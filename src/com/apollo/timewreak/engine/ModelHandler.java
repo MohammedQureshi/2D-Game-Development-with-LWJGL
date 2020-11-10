@@ -17,8 +17,7 @@ public class ModelHandler {
     private int indicesID;
 
     public ModelHandler(float[] vertices, float[] textureCoords, int[] indices){
-        drawCount = indices.length;
-
+        drawCount = indices.length; //Assigns the draw count to the length of the indices such as how drawing the object
 
         vertexID = glGenBuffers();
         glBindBuffer(GL_ARRAY_BUFFER, vertexID);
@@ -38,6 +37,7 @@ public class ModelHandler {
     }
 
     protected void finalise(){
+    	//Deletes all buffers when not visible so game does not lag. 
         glDeleteBuffers(vertexID);
         glDeleteBuffers(textureID);
         glDeleteBuffers(indicesID);
