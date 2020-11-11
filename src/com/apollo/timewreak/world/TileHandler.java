@@ -2,10 +2,13 @@ package com.apollo.timewreak.world;
 
 public class TileHandler {
 
-    public static TileHandler tiles[] = new TileHandler[4];
+    public static TileHandler tiles[] = new TileHandler[5];
 
-    public static final TileHandler sampleTile = new TileHandler((byte)0, "test");
-    public static final TileHandler newTile = new TileHandler((byte) 1, "test2");
+    public static final TileHandler GrassTile = new TileHandler((byte)0, "grass");
+    public static final TileHandler StoneTile = new TileHandler((byte) 1, "rock");
+    public static final TileHandler WoodTile = new TileHandler((byte) 2, "wood");
+    public static final TileHandler SandTile = new TileHandler((byte)3, "sand");
+    public static final TileHandler PebblesTile = new TileHandler((byte)4, "pebbles");
 
     private byte ID;
     private String texture;
