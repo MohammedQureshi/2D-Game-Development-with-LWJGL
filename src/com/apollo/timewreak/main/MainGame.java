@@ -48,10 +48,10 @@ public class MainGame {
 
         Player player = new Player();
 
-        world.setTile(TileHandler.SandTile, 2, 0);
-        world.setTile(TileHandler.StoneTile, 3, 0);
-        world.setTile(TileHandler.WoodTile, 4, 0);
-        world.setTile(TileHandler.PebblesTile, 1, 0);
+        world.setTile(TileHandler.SandTile, 2, 2);
+        world.setTile(TileHandler.StoneTile, 3, 3);
+        world.setTile(TileHandler.WoodTile, 4, 4);
+        world.setTile(TileHandler.PebblesTile, 5, 5);
 
         double MAX_FRAME_RATE = 1.0/Config.MAX_FPS;
         double FRAME_TIME = 0;
