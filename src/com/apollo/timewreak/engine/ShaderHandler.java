@@ -15,7 +15,7 @@ public class ShaderHandler {
     private int vertexShader;
     private int fragmentShader;
 
-    public ShaderHandler(String vertexShaderFileName, String fragmentShaderFileName){
+    public ShaderHandler(final String vertexShaderFileName, final String fragmentShaderFileName){
         application = glCreateProgram();
         vertexShader = glCreateShader(GL_VERTEX_SHADER);
         glShaderSource(vertexShader, readFile(vertexShaderFileName + ".vs"));
@@ -51,7 +51,7 @@ public class ShaderHandler {
 
     }
 
-    public void setUniform(String name, int value){
+    public void setUniform(final String name, final int value){
         int location = glGetUniformLocation(application, name);
         if(location != -1){
             glUniform1i(location, value);
@@ -66,7 +66,7 @@ public class ShaderHandler {
         glDeleteProgram(application);
     }
 
-    public void setUniform(String name, Matrix4f value){
+    public void setUniform(final String name, final Matrix4f value){
         int location = glGetUniformLocation(application, name);
         FloatBuffer buffer = BufferUtils.createFloatBuffer(16);
         value.get(buffer);
@@ -79,7 +79,7 @@ public class ShaderHandler {
         glUseProgram(application);
     }
 
-    private String readFile(String fileName){
+    private String readFile(final String fileName){
         StringBuilder string = new StringBuilder();
         BufferedReader bufferedReader;
         try{

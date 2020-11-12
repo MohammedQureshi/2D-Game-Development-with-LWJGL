@@ -1,5 +1,7 @@
 package com.apollo.timewreak.networking;
 
+import com.apollo.timewreak.main.GameObject;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -16,6 +18,8 @@ public class Client {
     private Logger logger;
     private boolean isConnected = false;
     private String message = "";
+    private BufferedReader reader;
+    private PrintWriter writer;
     private Socket socket = null;
     private String uuid;
 
@@ -64,8 +68,8 @@ public class Client {
                 socket = new Socket();
                 socket.connect(new InetSocketAddress(InetAddress.getByName(ip), port), timeout);
 
-                BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
+                reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                writer = new PrintWriter(socket.getOutputStream(), true);
 
                 logger.info("[FROM SERVER] " + reader.readLine());
 
@@ -91,8 +95,11 @@ public class Client {
         }
     }
 
-    public void say(PrintWriter writer, String clientMessage) {
+    public void setMessage(String clientMessage) {
         this.message = clientMessage;
-        writer.println(message);
+    }
+
+    public <T extends GameObject> void setMessage(T[] objects) {
+
     }
 }

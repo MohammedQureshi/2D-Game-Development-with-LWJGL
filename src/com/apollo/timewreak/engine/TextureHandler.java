@@ -3,6 +3,7 @@ package com.apollo.timewreak.engine;
 import org.lwjgl.BufferUtils;
 import java.nio.*;
 import static org.lwjgl.opengl.GL12.*;
+import static org.lwjgl.opengl.GL15.glDeleteBuffers;
 import static org.lwjgl.stb.STBImage.*;
 import static org.lwjgl.opengl.GL11.glGenTextures;
 import static org.lwjgl.opengl.GL13.*;
@@ -13,7 +14,7 @@ public class TextureHandler {
     private int textureWidth;
     private int textureHeight;
 
-    public TextureHandler(String fileName){
+    public TextureHandler(final String fileName){
         IntBuffer textureWidth = BufferUtils.createIntBuffer(1);
         IntBuffer textureHeight = BufferUtils.createIntBuffer(1);
         IntBuffer textureComp = BufferUtils.createIntBuffer(1);
@@ -35,10 +36,11 @@ public class TextureHandler {
 
     protected void finalise() throws Throwable {
         glDeleteTextures(textureID);
+        // TODO: update this so it's not deprecated anymore.
         super.finalize();
     }
 
-    public void bind(int sampler){
+    public void bind(final int sampler){
         if(sampler >= 0 && sampler <= 31){
             glActiveTexture(GL_TEXTURE0 + sampler);
             glBindTexture(GL_TEXTURE_2D, textureID);

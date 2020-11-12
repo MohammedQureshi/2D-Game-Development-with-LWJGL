@@ -23,6 +23,7 @@ public class DisplayHandler {
         });
     }
 
+    // TODO: get the logged in users video settings instead of setting them manually
     public DisplayHandler(){
         videoSettings = new VideoSettings();
         videoSettings.setPropertyIfFound("FULLSCREEN", false);

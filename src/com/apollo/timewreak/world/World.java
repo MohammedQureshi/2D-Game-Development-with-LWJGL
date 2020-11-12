@@ -7,8 +7,6 @@ import com.apollo.timewreak.main.Config;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
-import javax.swing.*;
-
 public class World {
     private final int view = 40;
     private byte[] tiles;

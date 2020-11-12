@@ -8,9 +8,11 @@ import com.apollo.timewreak.main.Config;
 public class Lobby {
     private Server server;
     private int maxPlayerCount = 0;
-//    private Map[] playableMaps; // TODO: create a Map type class.
+//    private Map[] playerMap;
+
 
     public Lobby() {
+
         /** getting the value from the Config and getting the host port. */
         server = new Server(Server.DefaultConfig.HOST_PORT);
 

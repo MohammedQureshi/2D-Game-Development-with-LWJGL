@@ -16,7 +16,7 @@ public class ModelHandler {
 
     private int indicesID;
 
-    public ModelHandler(float[] vertices, float[] textureCoords, int[] indices){
+    public ModelHandler(final float[] vertices, final float[] textureCoords, final int[] indices){
         drawCount = indices.length; //Assigns the draw count to the length of the indices such as how drawing the object
 
         vertexID = glGenBuffers();

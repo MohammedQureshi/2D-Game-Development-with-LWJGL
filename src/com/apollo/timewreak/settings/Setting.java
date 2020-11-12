@@ -67,13 +67,13 @@ public abstract class Setting {
     }
 
     public String getProperty(String property) {
-        // TODO: return default value of ""
         return this.settings.getProperty(property);
     }
+
     public Set<Object> getAllProperties() {
         return this.settings.keySet();
     }
-
+    
     // TODO: implement a proper IO Adapter Class / Wrapper
     public void save(){
         if(this.canSave()) {
