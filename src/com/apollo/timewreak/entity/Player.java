@@ -2,6 +2,7 @@ package com.apollo.timewreak.entity;
 
 import com.apollo.timewreak.engine.*;
 import com.apollo.timewreak.inputOutput.DisplayHandler;
+import com.apollo.timewreak.inputOutput.InputHandler;
 import com.apollo.timewreak.main.Config;
 import com.apollo.timewreak.main.GameObject;
 import com.apollo.timewreak.world.World;
@@ -42,66 +43,59 @@ public class Player{
         float Scale = 64;
         transform.scale = new Vector3f(Scale,Scale,1);
     }
-    private boolean walkingUp = false;
-    private boolean walkingRight = false;
-    
-    
-    private boolean alreadyRunningOne = false;
-    private boolean alreadyRunningTwo = false;
-    private boolean alreadyRunningThree = false;
-    private boolean alreadyRunningFour = false;
-    
-    public void update(float delta, DisplayHandler display, CameraHandler camera, World world){
-        if(display.getInput().isKeyDown(GLFW_KEY_W)){
-            transform.position.add(new Vector3f(0, Config.PLAYER_SPEED *delta, 0));
-            walkingUp = true;
-        }
-        if(display.getInput().isKeyDown(GLFW_KEY_A)){
-            transform.position.add(new Vector3f(-Config.PLAYER_SPEED *delta, 0, 0));
-            walkingRight = false;
-        }
-        if(display.getInput().isKeyDown(GLFW_KEY_S)){
-            transform.position.add(new Vector3f(0, -Config.PLAYER_SPEED *delta, 0));
-            walkingUp = false;
-        }
-        if(display.getInput().isKeyDown(GLFW_KEY_D)){
-            transform.position.add(new Vector3f(Config.PLAYER_SPEED *delta, 0, 0));
-            walkingRight = true;
-        }
-        
-        
-        if(walkingUp && !walkingRight && !alreadyRunningOne){
-            this.texture = new AnimationHandler(1, 3, "backLeft");
-            alreadyRunningOne = true;
-            alreadyRunningTwo = false;
-            alreadyRunningThree = false;
-            alreadyRunningFour = false;
-        } else if(walkingUp && walkingRight && !alreadyRunningTwo){
-            this.texture = new AnimationHandler(1, 3, "backRight");
-            alreadyRunningTwo = true;
-            alreadyRunningOne = false;
-            alreadyRunningThree = false;
-            alreadyRunningFour = false;
+
+
+    /** amount and fps set to the default fra which is frontLeft. */
+    private String facingDirection = "front";
+    private String movingDirection = "Left";
+    private String previousState = "";
+    private int amount = 3;
+    private double fps = 3;
+
+    // TODO: think of a better want to do this, probably with animation states or something similar
+    public void update(final float delta, final DisplayHandler display, final CameraHandler camera, final World world){
+        InputHandler input = display.getInput();
+        float x = 0;
+        float y = 0;
+        float z = 0;
+
+        if(input.isKeyDown(GLFW_KEY_W)){
+            y = (Config.PLAYER_SPEED * delta);
+            amount = 1;
+            fps = 3;
+            facingDirection = "back";
         }
 
-        if(!walkingUp && !walkingRight & !alreadyRunningThree){
-            this.texture = new AnimationHandler(3, 3, "frontLeft");
-            alreadyRunningThree = true;
-            alreadyRunningOne = false;
-            alreadyRunningTwo = false;
-            alreadyRunningFour = false;
-        } else if(!walkingUp && walkingRight && !alreadyRunningFour){
-            this.texture = new AnimationHandler(3, 3, "frontRight");
-            alreadyRunningFour = true;
-            alreadyRunningOne = false;
-            alreadyRunningTwo = false;
-            alreadyRunningThree = false;
+        if(input.isKeyDown(GLFW_KEY_A)){
+            movingDirection = "Left";
+            x = (-Config.PLAYER_SPEED * delta);
         }
-        
-        object = new GameObject(transform.getPosition().x,transform.getPosition().y);
+
+        if(input.isKeyDown(GLFW_KEY_S)){
+            facingDirection = "front";
+            y = (-Config.PLAYER_SPEED * delta);
+            amount = 3;
+            fps = 3;
+        }
+
+        if(input.isKeyDown(GLFW_KEY_D)){
+            movingDirection = "Right";
+            x = Config.PLAYER_SPEED * delta;
+        }
+
+        /** updating only when the the player actually updates their movements instead of updating the texture constantly. */
+        if(!(facingDirection.concat(movingDirection)).equals(previousState)) {
+            this.texture = new AnimationHandler(amount, fps, facingDirection + movingDirection);
+            previousState = facingDirection.concat(movingDirection);
+        }
+
+        transform.position.add(new Vector3f(x, y, z));
+
+        object = new GameObject(transform.position.x,transform.position.y);
 
         camera.setPosition(transform.position.mul(-world.getScale() -50, new Vector3f()));
     }
+
 
     public void render(ShaderHandler shader, CameraHandler camera){
         shader.bind();
