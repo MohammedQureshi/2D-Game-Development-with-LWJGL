@@ -12,5 +12,6 @@ public class Config {
     public static double MAX_FPS = 65;
     public static int PLAYER_SPEED = 5;
     public static final int GAME_SCALE = 16;
-
+    public static DevelopmentEnvironment DEV_ENVIRONMENT = DevelopmentEnvironment.DEVELOPMENT;
+    public static String BUILD_VERSION = "0.1";
 }
