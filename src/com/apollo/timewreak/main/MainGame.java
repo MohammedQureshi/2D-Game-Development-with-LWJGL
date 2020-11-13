@@ -1,5 +1,6 @@
 package com.apollo.timewreak.main;
 
+import com.apollo.timewreak.collision.AABBCollision;
 import com.apollo.timewreak.engine.*;
 import com.apollo.timewreak.entity.Player;
 import com.apollo.timewreak.inputOutput.DisplayHandler;
@@ -7,9 +8,7 @@ import com.apollo.timewreak.inputOutput.TimerHandler;
 import com.apollo.timewreak.world.TileHandler;
 import com.apollo.timewreak.world.TileRenderer;
 import com.apollo.timewreak.world.World;
-import org.joml.Matrix4f;
-import org.joml.Vector3f;
-import org.lwjgl.glfw.GLFW;
+import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
 
@@ -23,6 +22,13 @@ public class MainGame {
         if(!glfwInit()){ //Check to see if GLFW has been initialised
             System.err.println("GLFW Failed to Initialise"); //Prints Error
             System.exit(1); // Exits System
+        }
+
+        AABBCollision boxOne = new AABBCollision(new Vector2f(0,0), new Vector2f(1,1));
+        AABBCollision boxTwo = new AABBCollision(new Vector2f(1,0), new Vector2f(1,1));
+
+        if(boxOne.isIntersecting(boxTwo)){
+            System.out.println("Boxes are intersecting");
         }
 
 

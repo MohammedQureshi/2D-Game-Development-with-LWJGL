@@ -1,7 +1,6 @@
 package com.apollo.timewreak.engine;
 
 import com.apollo.timewreak.inputOutput.TimerHandler;
-import org.w3c.dom.Text;
 
 public class AnimationHandler {
     private TextureHandler[] frames;
