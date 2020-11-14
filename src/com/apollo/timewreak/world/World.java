@@ -1,10 +1,12 @@
 package com.apollo.timewreak.world;
 
+import com.apollo.timewreak.collision.AABBCollision;
 import com.apollo.timewreak.engine.CameraHandler;
 import com.apollo.timewreak.engine.ShaderHandler;
 import com.apollo.timewreak.inputOutput.DisplayHandler;
 import com.apollo.timewreak.main.Config;
 import org.joml.Matrix4f;
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 public class World {
@@ -12,6 +14,7 @@ public class World {
     private byte[] tiles;
     private int WIDTH;
     private int HEIGHT;
+    private AABBCollision[] boundingBoxes;
 
     private Matrix4f world;
 
@@ -19,6 +22,7 @@ public class World {
         WIDTH = 64;
         HEIGHT = 64;
         tiles = new byte[WIDTH * HEIGHT];
+        boundingBoxes = new AABBCollision[WIDTH * HEIGHT];
         world = new Matrix4f().setTranslation(new Vector3f(0));
         world.scale(Config.GAME_SCALE);
     }
@@ -52,11 +56,24 @@ public class World {
 
     public void setTile(TileHandler tile, int x, int y){
         tiles[x + y * WIDTH] = tile.getID();
+        if(tile.isSolid()){
+            boundingBoxes[x + y * WIDTH] = new AABBCollision(new Vector2f(x*2, -y*2), new Vector2f(1,1));
+        }else{
+            boundingBoxes[x + y * WIDTH] = null;
+        }
     }
 
     public TileHandler getTile(int x, int y){
         try{
             return TileHandler.tiles[tiles[x + y * WIDTH]];
+        }catch(ArrayIndexOutOfBoundsException e){
+            return null;
+        }
+    }
+
+    public AABBCollision getTileBoundingBox(int x, int y){
+        try{
+            return boundingBoxes[x + y * WIDTH];
         }catch(ArrayIndexOutOfBoundsException e){
             return null;
         }

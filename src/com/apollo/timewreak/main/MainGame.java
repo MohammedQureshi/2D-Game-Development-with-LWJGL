@@ -24,14 +24,6 @@ public class MainGame {
             System.exit(1); // Exits System
         }
 
-        AABBCollision boxOne = new AABBCollision(new Vector2f(0,0), new Vector2f(1,1));
-        AABBCollision boxTwo = new AABBCollision(new Vector2f(1,0), new Vector2f(1,1));
-
-        if(boxOne.isIntersecting(boxTwo)){
-            System.out.println("Boxes are intersecting");
-        }
-
-
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // the window will stay hidden after creation
         glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE); // the window will not be resizable
         DisplayHandler display = new DisplayHandler();
@@ -56,8 +48,8 @@ public class MainGame {
 
         world.setTile(TileHandler.SandTile, 2, 2);
         world.setTile(TileHandler.StoneTile, 3, 3);
-        world.setTile(TileHandler.WoodTile, 4, 4);
-        world.setTile(TileHandler.PebblesTile, 5, 5);
+        world.setTile(TileHandler.StoneTile, 4, 4);
+        world.setTile(TileHandler.StoneTile, 5, 5);
 
         double MAX_FRAME_RATE = 1.0/Config.MAX_FPS;
         double FRAME_TIME = 0;

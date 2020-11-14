@@ -5,17 +5,19 @@ public class TileHandler {
     public static TileHandler tiles[] = new TileHandler[5];
 
     public static final TileHandler GrassTile = new TileHandler(0, "grass");
-    public static final TileHandler StoneTile = new TileHandler(1, "rock");
+    public static final TileHandler StoneTile = new TileHandler(1, "rock").setSolid();
     public static final TileHandler WoodTile = new TileHandler(2, "wood");
     public static final TileHandler SandTile = new TileHandler(3, "sand");
     public static final TileHandler PebblesTile = new TileHandler(4, "pebbles");
 
     private byte ID;
+    private boolean solid;
     private String texture;
 
     public TileHandler(final byte ID, String texture){
         this.ID = ID;
         this.texture = texture;
+        this.solid = false;
         if(tiles[ID] != null){
             throw new IllegalStateException("Tiles at: ["+ ID + "] is already being used!");
         }
@@ -29,6 +31,15 @@ public class TileHandler {
 
     public byte getID() {
         return ID;
+    }
+
+    public TileHandler setSolid(){
+        this.solid = true;
+        return this;
+    }
+
+    public boolean isSolid(){
+        return solid;
     }
 
     public void setID(final byte ID) {
